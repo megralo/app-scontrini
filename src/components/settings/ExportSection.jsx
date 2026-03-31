@@ -50,6 +50,7 @@ export default function ExportSection({ receipts }) {
   return (
     <div className="flex flex-col gap-3">
       <button
+        type="button"
         onClick={() => triggerExport('csv', handleExportCSV)}
         disabled={receipts.length === 0 || isExporting === 'csv'}
         className="flex items-center justify-between w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 active:bg-gray-50 transition-colors disabled:opacity-40"
@@ -64,6 +65,7 @@ export default function ExportSection({ receipts }) {
       </button>
 
       <button
+        type="button"
         onClick={() => triggerExport('json', handleExportJSON)}
         disabled={isExporting === 'json'}
         className="flex items-center justify-between w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 active:bg-gray-50 transition-colors disabled:opacity-40"

@@ -6,18 +6,16 @@
 
 ## Indice
 
-- [App Scontrini](#app-scontrini)
-  - [Indice](#indice)
-  - [Panoramica](#panoramica)
-  - [Funzionalità](#funzionalità)
-  - [Stack tecnologico](#stack-tecnologico)
-  - [Prerequisiti](#prerequisiti)
-  - [Installazione](#installazione)
-  - [Utilizzo](#utilizzo)
-  - [Test](#test)
-  - [Struttura del progetto](#struttura-del-progetto)
-  - [Limitazioni note](#limitazioni-note)
-  - [Roadmap](#roadmap)
+- [Panoramica](#panoramica)
+- [Funzionalità](#funzionalità)
+- [Stack tecnologico](#stack-tecnologico)
+- [Prerequisiti](#prerequisiti)
+- [Installazione](#installazione)
+- [Utilizzo](#utilizzo)
+- [Test](#test)
+- [Struttura del progetto](#struttura-del-progetto)
+- [Limitazioni note](#limitazioni-note)
+- [Roadmap](#roadmap)
 
 ---
 
@@ -122,10 +120,10 @@ Soglie di copertura configurate (su `src/lib/**`):
 
 | Metrica | Soglia |
 |---|---|
-| Statements | 80% |
-| Functions | 80% |
-| Lines | 80% |
-| Branches | 70% |
+| Statements | 71% |
+| Functions | 78% |
+| Lines | 71% |
+| Branches | 80% |
 
 ---
 

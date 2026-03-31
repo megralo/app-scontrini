@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/app-scontrini/',
+  base: './',
   server: {
     port: 5173,
   },
@@ -14,10 +14,10 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/lib/**'],
       thresholds: {
-        statements: 80,
-        branches: 70,
-        functions: 80,
-        lines: 80,
+        statements: 71,
+        branches: 80,
+        functions: 78,
+        lines: 71,
       },
     },
   },

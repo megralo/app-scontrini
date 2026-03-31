@@ -33,4 +33,9 @@ describe('parseAmount', () => {
   it('restituisce NaN per undefined', () => {
     expect(parseAmount(undefined)).toBeNaN()
   })
+
+  it('"-12,50" → -12.5 (negativo preservato — scartato poi da extractTotal)', () => {
+    // parseAmount restituisce -12.5; extractTotal lo scarta con il guard amount > 0
+    expect(parseAmount('-12,50')).toBe(-12.5)
+  })
 })

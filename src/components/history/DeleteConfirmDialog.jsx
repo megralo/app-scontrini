@@ -21,12 +21,14 @@ export default function DeleteConfirmDialog({ onConfirm, onCancel }) {
       </div>
       <div className="flex gap-3">
         <button
+          type="button"
           onClick={onCancel}
           className="flex-1 border border-gray-300 text-gray-600 font-semibold py-3 rounded-xl active:bg-gray-50 transition-colors text-sm"
         >
           Annulla
         </button>
         <button
+          type="button"
           onClick={onConfirm}
           className="flex-1 bg-red-600 text-white font-semibold py-3 rounded-xl shadow active:bg-red-700 transition-colors text-sm"
         >

@@ -10,7 +10,9 @@ const TOTAL_PATTERNS = [
   /(?:importo\s+\S+\s*[:=]?\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
   /(?:importo\s*[:=]?\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
   /(?:da\s+pagare\s*[:=]?\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
+  /(?:a\s+pagare\s*[:=]?\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
   /(?:pagamento\s+\S+\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
+  /(?:netto\s*[:=]?\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/i,
   /(?:€\s*)(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d{1,5}[.,]\d{2})/,
 ]
 
@@ -79,9 +81,69 @@ export function extractMerchant(text) {
     if (/^\d+([.,]\d+)?$/.test(line)) continue          // solo numeri
     if (/^\d{2}[/.\-]\d{2}/.test(line)) continue        // inizia con data
     if (/^(tel|fax|p\.?\s*iva|c\.?\s*f|cod\.|www|http|sdi|rea)/i.test(line)) continue
+    // Logo grafico letto come caratteri sparsi (es. "n e I n i O OR i"): molte parole brevi
+    const words = line.split(/\s+/)
+    if (words.length > 3 && words.reduce((s, w) => s + w.length, 0) / words.length < 2.5) continue
     return line
   }
   return ''
+}
+
+// ── Preprocessing immagine ─────────────────────────────────────────────────
+
+/**
+ * Pre-elabora l'immagine per migliorare la leggibilità OCR:
+ * - scala a minimo 1500px sul lato più lungo se l'immagine è troppo piccola
+ * - converte in scala di grigi
+ * - aumenta il contrasto (fattore 1.5) per leggere meglio carta termica a basso contrasto
+ *
+ * @param {File} file - File immagine originale.
+ * @returns {Promise<Blob>} Immagine preprocessata come Blob PNG.
+ */
+function preprocessImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      try {
+        const MIN_LONG_SIDE = 1500
+        const longSide = Math.max(img.width, img.height)
+        const scale = longSide < MIN_LONG_SIDE ? MIN_LONG_SIDE / longSide : 1
+        const w = Math.round(img.width * scale)
+        const h = Math.round(img.height * scale)
+
+        const canvas = document.createElement('canvas')
+        canvas.width = w
+        canvas.height = h
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0, w, h)
+
+        const imageData = ctx.getImageData(0, 0, w, h)
+        const d = imageData.data
+        for (let i = 0; i < d.length; i += 4) {
+          // Luminanza → scala di grigi
+          const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]
+          // Boost contrasto lineare: spinge i grigi scuri verso il nero e i chiari verso il bianco
+          const boosted = Math.min(255, Math.max(0, (gray - 128) * 1.5 + 128))
+          d[i] = d[i + 1] = d[i + 2] = boosted
+        }
+        ctx.putImageData(imageData, 0, 0)
+
+        canvas.toBlob(
+          (blob) => (blob ? resolve(blob) : reject(new Error('Preprocessing immagine fallito'))),
+          'image/png'
+        )
+      } catch (err) {
+        reject(err)
+      }
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      reject(new Error("Impossibile leggere l'immagine"))
+    }
+    img.src = url
+  })
 }
 
 // ── Caricamento CDN Tesseract (bypassa bundling Vite) ──────────────────────
@@ -133,9 +195,17 @@ export async function runOcr(imageFile, onProgress = () => {}) {
     )
   }
 
+  onProgress('Ottimizzazione immagine…', 3)
+  let processedImage
+  try {
+    processedImage = await preprocessImage(imageFile)
+  } catch {
+    processedImage = imageFile // fallback all'originale se il preprocessing fallisce
+  }
+
   let text
   try {
-    const { data } = await Tesseract.recognize(imageFile, 'ita', {
+    const { data } = await Tesseract.recognize(processedImage, 'ita', {
       langPath: 'https://cdn.jsdelivr.net/gh/naptha/tessdata@gh-pages/4.0.0',
       logger: (m) => {
         if (m.status === 'loading tesseract core') {

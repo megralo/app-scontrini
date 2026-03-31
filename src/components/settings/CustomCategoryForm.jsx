@@ -25,6 +25,7 @@ export default function CustomCategoryForm({ onAdd, existingNames }) {
       <div className="flex gap-2">
         <input
           type="text"
+          aria-label="Nome categoria"
           value={name}
           onChange={(e) => { setName(e.target.value); setError('') }}
           placeholder="Nome categoria"
@@ -36,6 +37,7 @@ export default function CustomCategoryForm({ onAdd, existingNames }) {
           onChange={(e) => setColor(e.target.value)}
           className="w-11 h-11 rounded-xl border border-gray-300 cursor-pointer p-1 shrink-0"
           title="Scegli colore"
+          aria-label="Scegli colore categoria"
         />
       </div>
       <button

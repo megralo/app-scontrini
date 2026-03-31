@@ -10,7 +10,7 @@ export default function SearchBar({ value, onChange }) {
       onChange(inputValue)
     }, 200)
     return () => clearTimeout(timer)
-  }, [inputValue]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inputValue, onChange])
 
   // Sincronizza se il parent resetta il valore dall'esterno
   useEffect(() => {
@@ -35,6 +35,7 @@ export default function SearchBar({ value, onChange }) {
       />
       {inputValue && (
         <button
+          type="button"
           onClick={handleClear}
           aria-label="Cancella ricerca"
           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 active:text-gray-600"

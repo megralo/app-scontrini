@@ -35,10 +35,17 @@ export default function ImportSection({ onMerge, onReplace }) {
             return
           }
           const malformed = data.receipts.findIndex(
-            (r) => !r || typeof r !== 'object' || !r.id || !r.date || r.total == null
+            (r) =>
+              !r ||
+              typeof r !== 'object' ||
+              !r.id ||
+              !r.date ||
+              r.total == null ||
+              typeof r.total !== 'number' ||
+              !isFinite(r.total)
           )
           if (malformed !== -1) {
-            setParseError(`Formato non valido: lo scontrino alla posizione ${malformed} manca dei campi obbligatori (id, date, total).`)
+            setParseError(`Formato non valido: lo scontrino alla posizione ${malformed} manca dei campi obbligatori o ha un totale non numerico (id, date, total).`)
             setParsed(null)
             return
           }
@@ -101,6 +108,7 @@ export default function ImportSection({ onMerge, onReplace }) {
     <>
       <div className="flex flex-col gap-3">
         <button
+          type="button"
           onClick={() => { setResult(null); setParseError(''); fileRef.current?.click() }}
           className="flex items-center justify-between w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 active:bg-gray-50 transition-colors"
         >

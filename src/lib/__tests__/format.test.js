@@ -34,7 +34,6 @@ describe('formatEur', () => {
   })
 
   it('1234.5 → "1234,50 €" (comportamento reale in Node.js: nessun separatore migliaia)', () => {
-    // TODO: in browser con ICU completo l'output atteso sarebbe "1.234,50 €"
     expect(formatEur(1234.5)).toBe('1234,50 €')
   })
 

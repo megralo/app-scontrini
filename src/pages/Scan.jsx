@@ -94,12 +94,14 @@ export default function Scan() {
           </div>
           <div className="flex gap-3">
             <button
+              type="button"
               onClick={handleCancel}
               className="flex-1 border border-gray-300 text-gray-600 font-semibold py-3 rounded-xl active:bg-gray-50"
             >
               Riprova
             </button>
             <button
+              type="button"
               onClick={handleManual}
               className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold py-3 rounded-xl shadow active:bg-blue-700"
             >

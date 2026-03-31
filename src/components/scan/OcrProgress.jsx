@@ -12,7 +12,7 @@ export default function OcrProgress({ message, progress }) {
 
       <div className="w-full max-w-sm text-center">
         <p className="font-semibold text-gray-800 mb-1">Elaborazione in corso…</p>
-        <p className="text-sm text-gray-500 min-h-[1.25rem]">{message}</p>
+        <p className="text-sm text-gray-500 min-h-[1.25rem]" aria-live="polite" aria-atomic="true">{message}</p>
       </div>
 
       {/* Progress bar */}
@@ -23,6 +23,11 @@ export default function OcrProgress({ message, progress }) {
         </div>
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
           <div
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Avanzamento analisi OCR"
             className="h-full bg-blue-500 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
