@@ -1,6 +1,15 @@
 import { Search, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
+/**
+ * Campo di ricerca con debounce (200ms) e bottone clear accessibile.
+ * Propaga i cambiamenti al parent con ritardo per evitare re-render ad ogni carattere.
+ * Si risincronizza con il valore del parent (es. reset filtri) tramite un secondo effect.
+ *
+ * @param {Object}   props
+ * @param {string}   props.value      - Valore controllato corrente (gestito dal parent).
+ * @param {Function} props.onChange   - Callback invocata con il valore aggiornato dopo il debounce.
+ */
 export default function SearchBar({ value, onChange }) {
   const [inputValue, setInputValue] = useState(value)
 
@@ -15,7 +24,7 @@ export default function SearchBar({ value, onChange }) {
   // Sincronizza se il parent resetta il valore dall'esterno
   useEffect(() => {
     setInputValue(value)
-  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [value])
 
   function handleClear() {
     setInputValue('')

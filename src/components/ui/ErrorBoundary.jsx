@@ -38,6 +38,7 @@ export default class ErrorBoundary extends Component {
             {this.state.error?.message ?? 'Errore sconosciuto'}
           </p>
           <button
+            type="button"
             onClick={() => window.location.reload()}
             className="bg-blue-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow active:bg-blue-700"
           >

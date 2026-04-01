@@ -4,6 +4,14 @@ import { Plus } from 'lucide-react'
 // Colore predefinito per le nuove categorie personalizzate (lime-400 Tailwind)
 const DEFAULT_CATEGORY_COLOR = '#84cc16'
 
+/**
+ * Form per la creazione di una nuova categoria personalizzata.
+ * Esegue validazione inline (nome obbligatorio, unicità case-insensitive).
+ *
+ * @param {Object}   props
+ * @param {Function} props.onAdd           - Callback invocata con `(name: string, color: string)` al submit valido.
+ * @param {string[]} props.existingNames   - Nomi già esistenti (predefiniti + custom) per il controllo duplicati.
+ */
 export default function CustomCategoryForm({ onAdd, existingNames }) {
   const [name, setName] = useState('')
   const [color, setColor] = useState(DEFAULT_CATEGORY_COLOR)

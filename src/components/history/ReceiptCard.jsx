@@ -40,6 +40,7 @@ export default function ReceiptCard({ receipt, categoryColor, onDelete, onEdit }
       {/* Azioni */}
       <div className="flex items-center gap-1 shrink-0">
         <button
+          type="button"
           onClick={() => onEdit(receipt)}
           className="p-1.5 text-gray-300 active:text-blue-500 transition-colors"
           aria-label={`Modifica ${receipt.merchant || 'scontrino'}`}
@@ -47,6 +48,7 @@ export default function ReceiptCard({ receipt, categoryColor, onDelete, onEdit }
           <Pencil size={17} />
         </button>
         <button
+          type="button"
           onClick={() => onDelete(receipt.id)}
           className="p-1.5 text-gray-300 active:text-red-500 transition-colors"
           aria-label={`Elimina ${receipt.merchant || 'scontrino'}`}

@@ -1,5 +1,15 @@
 import { Trash2 } from 'lucide-react'
 
+/**
+ * Lista delle categorie (predefinite + personalizzate) nella pagina Impostazioni.
+ * Per le categorie predefinite mostra il badge "predefinita"; per le custom espone
+ * un bottone di eliminazione accessibile.
+ *
+ * @param {Object}        props
+ * @param {Array<Object>} props.allCategories         - Lista completa di categorie (predefinite + custom).
+ * @param {string[]}      props.customCategoryNames   - Nomi delle sole categorie personalizzate.
+ * @param {Function}      props.onRemove              - Callback invocata con il nome della categoria da eliminare.
+ */
 export default function CategoryList({ allCategories, customCategoryNames, onRemove }) {
   return (
     <div className="flex flex-col divide-y divide-gray-100">
@@ -19,6 +29,7 @@ export default function CategoryList({ allCategories, customCategoryNames, onRem
             </div>
             {isCustom && (
               <button
+                type="button"
                 onClick={() => onRemove(cat.name)}
                 className="text-gray-400 active:text-red-500 transition-colors p-1 -mr-1"
                 aria-label={`Elimina categoria ${cat.name}`}

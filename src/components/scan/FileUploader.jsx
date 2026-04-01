@@ -4,6 +4,15 @@ import { Upload, ImagePlus } from 'lucide-react'
 const ACCEPTED = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_FILE_SIZE = 8 * 1024 * 1024 // 8 MB
 
+/**
+ * Area di caricamento file con drag-and-drop e selezione tramite input.
+ * Valida tipo (JPEG/PNG/WEBP) e dimensione (max 8 MB) prima di invocare `onFile`.
+ * Usa un `dragCounter` ref per gestire correttamente gli eventi `dragenter`/`dragleave`
+ * sui figli dell'area senza falsi negativi (fix QA4).
+ *
+ * @param {Object}   props
+ * @param {Function} props.onFile  - Callback invocata con il `File` selezionato dopo la validazione.
+ */
 export default function FileUploader({ onFile }) {
   const inputRef = useRef(null)
   const dragCounter = useRef(0)

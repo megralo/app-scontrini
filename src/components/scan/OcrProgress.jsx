@@ -3,6 +3,15 @@ import { ScanLine } from 'lucide-react'
 // Dimensione stimata del pacchetto lingua Tesseract (italiano)
 const OCR_LANG_PACK_SIZE_MB = 4
 
+/**
+ * Indicatore di avanzamento per l'elaborazione OCR.
+ * Espone una progress bar con `role="progressbar"` e attributi ARIA completi,
+ * e un messaggio di stato con `aria-live="polite"` per i lettori di schermo.
+ *
+ * @param {Object} props
+ * @param {string} props.message   - Testo descrittivo della fase corrente (es. "Caricamento motore OCR…").
+ * @param {number} props.progress  - Percentuale di avanzamento (0–100).
+ */
 export default function OcrProgress({ message, progress }) {
   return (
     <div className="flex flex-col items-center gap-6 py-10 px-4">

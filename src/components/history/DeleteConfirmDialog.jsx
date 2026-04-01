@@ -1,6 +1,14 @@
 import { AlertTriangle } from 'lucide-react'
 import Modal from '../ui/Modal.jsx'
 
+/**
+ * Dialog di conferma eliminazione scontrino.
+ * Presentato come bottom-sheet; usa `aria-labelledby` per associare il titolo al dialog.
+ *
+ * @param {Object}   props
+ * @param {Function} props.onConfirm  - Callback invocata quando l'utente conferma l'eliminazione.
+ * @param {Function} props.onCancel   - Callback invocata quando l'utente annulla o chiude il dialog. 
+ */
 export default function DeleteConfirmDialog({ onConfirm, onCancel }) {
   return (
     <Modal

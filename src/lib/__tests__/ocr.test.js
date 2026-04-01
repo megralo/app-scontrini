@@ -43,6 +43,14 @@ describe('extractDate', () => {
     expect(result.isGuessed).toBe(true)
   })
 
+  it('anno 1999 fuori range → fallback data odierna', () => {
+    const result = extractDate('15/01/1999')
+    // 1999 < 2000: il guard scarta la data e restituisce oggi
+    expect(result.isGuessed).toBe(true)
+    expect(result.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+    expect(result.date).not.toBe('1999-01-15')
+  })
+
   it('anno 2100 fuori range → fallback data odierna', () => {
     const result = extractDate('15/01/2100')
     // 2100 > 2099: il guard scarta la data e restituisce oggi in formato YYYY-MM-DD
@@ -85,6 +93,10 @@ describe('extractTotal', () => {
 
   it('"NETTO 3,20" → 3.2', () => {
     expect(extractTotal('NETTO 3,20')).toBe(3.2)
+  })
+
+  it('importo >= 99999 → null (supera il tetto massimo atteso)', () => {
+    expect(extractTotal('Totale € 99999,00')).toBeNull()
   })
 })
 
