@@ -7,10 +7,12 @@ import { parseAmount } from '../../lib/parseAmount.js'
  * Gestisce validazione inline e richiama le callback al salvataggio/annullamento.
  *
  * @param {Object}        props
- * @param {Object}        [props.initial]        - Valori iniziali del form (usato in modalità modifica).
- * @param {Array<Object>} props.allCategories    - Lista di categorie disponibili (predefinite + custom).
- * @param {Function}      props.onSave           - Callback invocata con i dati validati al submit.
- * @param {Function}      props.onCancel         - Callback invocata quando l'utente annulla.
+ * @param {Object}        [props.initial]                  - Valori iniziali del form (usato in modalità modifica).
+ * @param {Array<Object>} props.allCategories              - Lista di categorie disponibili (predefinite + custom).
+ * @param {Function}      props.onSave                     - Callback invocata con i dati validati al submit.
+ * @param {Function}      props.onCancel                   - Callback invocata quando l'utente annulla.
+ * @param {boolean}       [props.warnDate]                 - Se `true`, mostra un avviso sotto il campo data (data stimata dall'OCR).
+ * @param {string}        [props.idPrefix='receipt-']      - Prefisso per gli `id` degli input; evita collisioni tra istanze multiple del form.
  */
 export default function ReceiptForm({ initial, allCategories, onSave, onCancel, warnDate, idPrefix = 'receipt-' }) {
   const today = new Date().toISOString().slice(0, 10)

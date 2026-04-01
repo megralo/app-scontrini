@@ -22,21 +22,12 @@ const AppContext = createContext(null)
  * @param {React.ReactNode} props.children - Albero dei componenti che hanno accesso al context.
  */
 export function AppProvider({ children }) {
-  const receiptsApi = useReceipts()
-  const settingsApi = useSettings()
+  const { receipts, add, update, remove, mergeImport, replaceAll } = useReceipts()
+  const { settings, allCategories, addCustomCategory, removeCustomCategory, replaceSettings } = useSettings()
 
   const value = useMemo(
-    () => ({ ...receiptsApi, ...settingsApi }),
-    // Le singole funzioni sono stabili via useCallback negli hook
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      receiptsApi.receipts,
-      receiptsApi.add, receiptsApi.update, receiptsApi.remove,
-      receiptsApi.mergeImport, receiptsApi.replaceAll,
-      settingsApi.settings, settingsApi.allCategories,
-      settingsApi.addCustomCategory, settingsApi.removeCustomCategory,
-      settingsApi.replaceSettings,
-    ]
+    () => ({ receipts, add, update, remove, mergeImport, replaceAll, settings, allCategories, addCustomCategory, removeCustomCategory, replaceSettings }),
+    [receipts, add, update, remove, mergeImport, replaceAll, settings, allCategories, addCustomCategory, removeCustomCategory, replaceSettings]
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
