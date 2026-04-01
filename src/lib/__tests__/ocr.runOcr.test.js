@@ -84,3 +84,35 @@ describe('runOcr — errore CDN', () => {
     )
   })
 })
+
+// ── Percorso errore Tesseract.recognize ──────────────────────────────────────
+
+describe('runOcr — errore Tesseract.recognize', () => {
+  let runOcr
+
+  beforeEach(async () => {
+    vi.resetModules()
+    vi.stubGlobal('URL', { createObjectURL: vi.fn(() => 'blob:mock'), revokeObjectURL: vi.fn() })
+    vi.stubGlobal('Image', function () {
+      const img = {}
+      setTimeout(() => { img.onerror?.() }, 0)
+      return img
+    })
+    // Tesseract presente ma recognize lancia un'eccezione
+    vi.stubGlobal('Tesseract', {
+      recognize: vi.fn().mockRejectedValue(new Error('Worker crash simulato')),
+    })
+    ;({ runOcr } = await import('../ocr.js'))
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('lancia errore human-readable se Tesseract.recognize fallisce', async () => {
+    const file = new File([''], 'scontrino.jpg', { type: 'image/jpeg' })
+    await expect(runOcr(file)).rejects.toThrow(
+      'Impossibile caricare il motore OCR'
+    )
+  })
+})

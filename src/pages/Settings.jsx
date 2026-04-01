@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useApp } from '../context/AppContext.jsx'
 import CustomCategoryForm from '../components/settings/CustomCategoryForm.jsx'
 import CategoryList from '../components/settings/CategoryList.jsx'
@@ -20,18 +21,13 @@ export default function Settings() {
   const existingNames      = allCategories.map((c) => c.name)
   const customCategoryNames = settings.customCategories.map((c) => c.name)
 
-  // Merge: unisce solo gli scontrini, non tocca le impostazioni locali
-  function handleMerge(incomingReceipts) {
-    return mergeImport(incomingReceipts)
-  }
-
   // Sostituisci tutto: rimpiazza scontrini e impostazioni
-  function handleReplace(incomingReceipts, incomingSettings) {
+  const handleReplace = useCallback((incomingReceipts, incomingSettings) => {
     replaceAll(incomingReceipts)
     if (incomingSettings && typeof incomingSettings === 'object') {
       replaceSettings(incomingSettings)
     }
-  }
+  }, [replaceAll, replaceSettings])
 
   return (
     <div className="p-4 max-w-md mx-auto flex flex-col gap-4">
@@ -59,7 +55,7 @@ export default function Settings() {
       </SectionCard>
 
       <SectionCard title="Importa dati">
-        <ImportSection onMerge={handleMerge} onReplace={handleReplace} />
+        <ImportSection onMerge={mergeImport} onReplace={handleReplace} />
       </SectionCard>
     </div>
   )

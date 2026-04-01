@@ -14,6 +14,10 @@ describe('parseAmount', () => {
     expect(parseAmount('1234.56')).toBe(1234.56)
   })
 
+  it('parses formato internazionale con separatore migliaia: "1,234.56" → 1234.56', () => {
+    expect(parseAmount('1,234.56')).toBe(1234.56)
+  })
+
   it('parses "0,99" → 0.99', () => {
     expect(parseAmount('0,99')).toBe(0.99)
   })

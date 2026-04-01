@@ -9,6 +9,7 @@ import {
   StorageQuotaError,
   deleteReceipt,
   updateReceipt,
+  replaceAllReceipts,
 } from '../storage.js'
 
 function makeMockStorage() {
@@ -139,5 +140,19 @@ describe('storage', () => {
     saveReceipts([{ id: 'existing' }])
     restoreAll({ receipts: null, settings: null })
     expect(loadReceipts()).toEqual([{ id: 'existing' }])
+  })
+
+  // replaceAllReceipts
+  it('replaceAllReceipts persiste la lista passata (round-trip con loadReceipts)', () => {
+    replaceAllReceipts([{ id: 'r1', date: '2024-06-01', total: 5 }])
+    expect(loadReceipts()).toEqual([{ id: 'r1', date: '2024-06-01', total: 5 }])
+  })
+
+  // loadSettings catch
+  it('loadSettings() restituisce DEFAULT_SETTINGS su JSON corrotto (graceful degradation)', () => {
+    mock.getItem.mockReturnValueOnce('not-valid-json{{{')
+    const s = loadSettings()
+    expect(s).toHaveProperty('customCategories')
+    expect(Array.isArray(s.customCategories)).toBe(true)
   })
 })

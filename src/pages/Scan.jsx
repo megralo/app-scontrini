@@ -46,7 +46,7 @@ export default function Scan() {
     }
   }, [])
 
-  function handleSave(data) {
+  const handleSave = useCallback((data) => {
     try {
       add(data)
       navigate('/history')
@@ -57,21 +57,21 @@ export default function Scan() {
         throw err
       }
     }
-  }
+  }, [add, navigate])
 
-  function handleCancel() {
+  const handleCancel = useCallback(() => {
     setPhase('idle')
     setExtracted(null)
     setErrorMsg('')
     setOcrPct(0)
-  }
+  }, [])
 
-  function handleManual() {
+  const handleManual = useCallback(() => {
     setExtracted(null)
     setOcrMsg('')
     setOcrPct(0)
     setPhase('done')
-  }
+  }, [])
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -88,7 +88,7 @@ export default function Scan() {
 
       {phase === 'error' && (
         <div className="flex flex-col gap-4">
-          <div className="flex gap-3 items-start bg-red-50 border border-red-200 rounded-xl p-4">
+          <div role="alert" className="flex gap-3 items-start bg-red-50 border border-red-200 rounded-xl p-4">
             <AlertCircle size={20} className="text-red-500 mt-0.5 shrink-0" />
             <p className="text-sm text-red-700">{errorMsg}</p>
           </div>
@@ -115,7 +115,7 @@ export default function Scan() {
       {phase === 'done' && (
         <>
           {extracted && (
-            <div className="mb-4 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+            <div role="status" className="mb-4 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
               <p className="text-xs text-green-700 font-medium">
                 Dati riconosciuti automaticamente — verifica e correggi se necessario.
               </p>
