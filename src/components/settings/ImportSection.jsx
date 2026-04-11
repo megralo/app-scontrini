@@ -128,21 +128,21 @@ export default function ImportSection({ onMerge, onReplace }) {
         />
 
         {parseError && (
-          <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+          <div role="alert" className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
             <AlertCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
             <p className="text-xs text-red-600">{parseError}</p>
           </div>
         )}
 
         {quotaError && (
-          <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+          <div role="alert" className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
             <AlertCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
             <p className="text-xs text-red-600">{quotaError}</p>
           </div>
         )}
 
         {result && (
-          <div className="flex items-start gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
+          <div role="status" className="flex items-start gap-2 bg-green-50 border border-green-200 rounded-xl px-4 py-3">
             <CheckCircle size={15} className="text-green-600 shrink-0 mt-0.5" />
             <p className="text-xs text-green-700">
               {result.type === 'merge'

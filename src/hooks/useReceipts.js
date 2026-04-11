@@ -61,11 +61,12 @@ export function useReceipts() {
       notes: data.notes ?? '',
       createdAt: new Date().toISOString(),
     }
-    const newList = [receipt, ...receipts]
+    const current = loadReceipts()
+    const newList = [receipt, ...current]
     saveReceipts(newList)
     setReceipts(newList)
     return receipt
-  }, [receipts])
+  }, [])
 
   /**
    * Elimina lo scontrino con l'id specificato dallo storage e dallo stato.

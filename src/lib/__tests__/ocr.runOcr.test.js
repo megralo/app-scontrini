@@ -51,6 +51,14 @@ describe('runOcr — successo con Tesseract mock', () => {
     expect(typeof pct).toBe('number')
     expect(pct).toBeGreaterThanOrEqual(0)
   })
+
+  it('riusa il singleton _tesseractReady alla seconda chiamata (caching)', async () => {
+    const file = new File([''], 'scontrino.jpg', { type: 'image/jpeg' })
+    await runOcr(file)          // prima chiamata: crea _tesseractReady
+    await runOcr(file)          // seconda chiamata: riusa il singleton (riga 161 coperta)
+    // Tesseract.recognize chiamato due volte, ma la Promise CDN creata una sola volta
+    expect(window.Tesseract.recognize).toHaveBeenCalledTimes(2)
+  })
 })
 
 // ── Percorso errore CDN ───────────────────────────────────────────────────────

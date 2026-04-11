@@ -122,7 +122,7 @@ export default function Scan() {
             </div>
           )}
           {saveError && (
-            <div className="flex gap-3 items-start bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+            <div role="alert" className="flex gap-3 items-start bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
               <HardDrive size={20} className="text-red-500 mt-0.5 shrink-0" />
               <p className="text-sm text-red-700">{saveError}</p>
             </div>
