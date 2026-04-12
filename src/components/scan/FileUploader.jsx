@@ -106,7 +106,7 @@ export default function FileUploader({ onFile }) {
       </p>
 
       {error && (
-        <p className="text-xs text-center text-red-600 px-4 max-w-xs">{error}</p>
+        <p role="alert" className="text-xs text-center text-red-600 px-4 max-w-xs">{error}</p>
       )}
     </div>
   )

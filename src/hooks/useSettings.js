@@ -41,13 +41,14 @@ export function useSettings() {
    * @param {string} color - Colore esadecimale della categoria (es. `"#84cc16"`).
    */
   const addCustomCategory = useCallback((name, color) => {
+    const current = loadSettings()
     const next = {
-      ...settings,
-      customCategories: [...settings.customCategories, { name, color }],
+      ...current,
+      customCategories: [...current.customCategories, { name, color }],
     }
     saveSettings(next)
     setSettings(next)
-  }, [settings])
+  }, [])
 
   /**
    * Rimuove una categoria personalizzata dalle impostazioni.
@@ -55,13 +56,14 @@ export function useSettings() {
    * @param {string} name - Nome della categoria da rimuovere.
    */
   const removeCustomCategory = useCallback((name) => {
+    const current = loadSettings()
     const next = {
-      ...settings,
-      customCategories: settings.customCategories.filter((c) => c.name !== name),
+      ...current,
+      customCategories: current.customCategories.filter((c) => c.name !== name),
     }
     saveSettings(next)
     setSettings(next)
-  }, [settings])
+  }, [])
 
   /**
    * Sostituisce completamente le impostazioni con quelle fornite e le persiste.

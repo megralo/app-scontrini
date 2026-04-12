@@ -34,6 +34,8 @@ export default function CustomCategoryForm({ onAdd, existingNames }) {
         <input
           type="text"
           aria-label="Nome categoria"
+          aria-invalid={!!error}
+          aria-describedby={error ? 'custom-category-error' : undefined}
           value={name}
           onChange={(e) => { setName(e.target.value); setError('') }}
           placeholder="Nome categoria"
@@ -55,7 +57,7 @@ export default function CustomCategoryForm({ onAdd, existingNames }) {
         <Plus size={16} />
         Aggiungi
       </button>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p id="custom-category-error" role="alert" className="text-xs text-red-500">{error}</p>}
     </form>
   )
 }

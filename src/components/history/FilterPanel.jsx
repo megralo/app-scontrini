@@ -88,7 +88,7 @@ export default function FilterPanel({ allCategories, selectedCategories, onCateg
           </div>
 
           {dateTouched && dateFrom && dateTo && dateFrom > dateTo && (
-            <p className="text-xs text-amber-600 -mt-2">
+            <p role="status" className="text-xs text-amber-600 -mt-2">
               Attenzione: la data di inizio è successiva alla data di fine.
             </p>
           )}

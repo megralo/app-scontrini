@@ -70,6 +70,8 @@ export default function ReceiptForm({ initial, allCategories, onSave, onCancel, 
           id={`${idPrefix}date`}
           type="date"
           aria-required="true"
+          aria-invalid={!!errors.date}
+          aria-describedby={errors.date ? `${idPrefix}date-error` : undefined}
           value={form.date}
           min="2000-01-01"
           max={today}
@@ -80,7 +82,11 @@ export default function ReceiptForm({ initial, allCategories, onSave, onCancel, 
         {warnDate && !errors.date && (
           <p className="text-xs text-amber-600 mt-1">Data non rilevata — verificare</p>
         )}
-        {errors.date && <p className="text-xs text-red-500 mt-1">{errors.date}</p>}
+        {errors.date && (
+          <p id={`${idPrefix}date-error`} role="alert" className="text-xs text-red-500 mt-1">
+            {errors.date}
+          </p>
+        )}
       </div>
 
       {/* Esercente */}
@@ -90,13 +96,19 @@ export default function ReceiptForm({ initial, allCategories, onSave, onCancel, 
           id={`${idPrefix}merchant`}
           type="text"
           aria-required="true"
+          aria-invalid={!!errors.merchant}
+          aria-describedby={errors.merchant ? `${idPrefix}merchant-error` : undefined}
           value={form.merchant}
           onChange={(e) => set('merchant', e.target.value)}
           placeholder="Es. Esselunga, Bar Roma…"
           className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
             ${errors.merchant ? 'border-red-400' : 'border-gray-300'}`}
         />
-        {errors.merchant && <p className="text-xs text-red-500 mt-1">{errors.merchant}</p>}
+        {errors.merchant && (
+          <p id={`${idPrefix}merchant-error`} role="alert" className="text-xs text-red-500 mt-1">
+            {errors.merchant}
+          </p>
+        )}
       </div>
 
       {/* Totale */}
@@ -106,6 +118,8 @@ export default function ReceiptForm({ initial, allCategories, onSave, onCancel, 
           id={`${idPrefix}total`}
           type="text"
           aria-required="true"
+          aria-invalid={!!errors.total}
+          aria-describedby={errors.total ? `${idPrefix}total-error` : undefined}
           inputMode="decimal"
           value={form.total}
           onChange={(e) => set('total', e.target.value)}
@@ -113,7 +127,11 @@ export default function ReceiptForm({ initial, allCategories, onSave, onCancel, 
           className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500
             ${errors.total ? 'border-red-400' : 'border-gray-300'}`}
         />
-        {errors.total && <p className="text-xs text-red-500 mt-1">{errors.total}</p>}
+        {errors.total && (
+          <p id={`${idPrefix}total-error`} role="alert" className="text-xs text-red-500 mt-1">
+            {errors.total}
+          </p>
+        )}
       </div>
 
       {/* Categoria */}
