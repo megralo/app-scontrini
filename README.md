@@ -6,16 +6,16 @@
 
 ## Indice
 
-- [Panoramica](#panoramica)
-- [Funzionalità](#funzionalità)
-- [Stack tecnologico](#stack-tecnologico)
-- [Prerequisiti](#prerequisiti)
-- [Installazione](#installazione)
-- [Utilizzo](#utilizzo)
-- [Test](#test)
-- [Struttura del progetto](#struttura-del-progetto)
-- [Limitazioni note](#limitazioni-note)
-- [Roadmap](#roadmap)
+  - [Panoramica](#panoramica)
+  - [Funzionalità](#funzionalità)
+  - [Stack tecnologico](#stack-tecnologico)
+  - [Prerequisiti](#prerequisiti)
+  - [Installazione](#installazione)
+  - [Utilizzo](#utilizzo)
+  - [Test](#test)
+  - [Struttura del progetto](#struttura-del-progetto)
+  - [Limitazioni note](#limitazioni-note)
+  - [Roadmap](#roadmap)
 
 ---
 
@@ -31,6 +31,8 @@ Tutto il processing avviene **nel browser** tramite [Tesseract.js](https://githu
 
 - **Scansione OCR** — carica una foto di uno scontrino (JPG, PNG, WEBP) e ottieni automaticamente importo, esercente e data
 - **Form di correzione** — modifica manualmente i dati riconosciuti prima di salvarli
+- **Modifica scontrini salvati** — modifica i dati di uno scontrino già salvato direttamente dallo storico
+- **Eliminazione scontrini** — elimina uno scontrino dallo storico con dialogo di conferma
 - **Categorie di spesa** — 10 categorie predefinite con assegnazione automatica via keyword matching; possibilità di aggiungerne di custom
 - **Storico scontrini** — lista ordinata per data con filtri per categoria, intervallo di date e ricerca testuale
 - **Dashboard mensile** — totale speso nel mese corrente, confronto col mese precedente, grafico a torta per categoria e top 5 esercenti
@@ -120,10 +122,10 @@ Soglie di copertura configurate (su `src/lib/**`):
 
 | Metrica | Soglia |
 |---|---|
-| Statements | 71% |
-| Functions | 78% |
-| Lines | 71% |
-| Branches | 80% |
+| Statements | 89% |
+| Branches | 95% |
+| Functions | 88% |
+| Lines | 89% |
 
 ---
 
@@ -136,12 +138,12 @@ src/
 │   ├── dashboard/    # MonthSummary, CategoryPieChart, TopMerchants
 │   ├── history/      # ReceiptCard, FilterPanel, SearchBar, dialogs
 │   ├── scan/         # FileUploader, OcrProgress, ReceiptForm
-│   ├── settings/     # CategoryList, ExportSection, ImportSection
+│   ├── settings/     # CategoryList, CustomCategoryForm, ExportSection, ImportSection
 │   ├── layout/       # Layout, BottomNav
 │   └── ui/           # Badge, Modal, SectionCard, EmptyState, ErrorBoundary
 ├── context/          # AppContext + hook useApp()
 ├── hooks/            # useReceipts, useSettings, useColorMap
-├── lib/              # Logica pura testata (ocr, parseAmount, format, storage, …)
+├── lib/              # Logica pura testata (ocr, parseAmount, format, storage, normalizeReceipt, download, uuid, …)
 └── data/             # Categorie predefinite con keyword e colori
 ```
 
