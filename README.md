@@ -6,6 +6,8 @@
 
 ## Indice
 
+- [App Scontrini](#app-scontrini)
+  - [Indice](#indice)
   - [Panoramica](#panoramica)
   - [Funzionalità](#funzionalità)
   - [Stack tecnologico](#stack-tecnologico)
@@ -53,6 +55,7 @@ Tutto il processing avviene **nel browser** tramite [Tesseract.js](https://githu
 | Grafici | Recharts | 2.13 |
 | Icone | Lucide React | 0.460 |
 | Test | Vitest | 2.0 |
+| PWA | Web App Manifest | — |
 
 ---
 
@@ -132,6 +135,8 @@ Soglie di copertura configurate (su `src/lib/**`):
 ## Struttura del progetto
 
 ```
+public/
+└── manifest.webmanifest  # Web App Manifest (start_url, icone, display standalone)
 src/
 ├── pages/            # Dashboard, Scan, History, Settings
 ├── components/
