@@ -26,6 +26,7 @@ export default function Scan() {
     setPhase('processing')
     setOcrPct(0)
     setOcrMsg('Avvio analisi…')
+    setSaveError('')
 
     try {
       const result = await runOcr(file, (msg, pct) => {
@@ -63,6 +64,7 @@ export default function Scan() {
     setPhase('idle')
     setExtracted(null)
     setErrorMsg('')
+    setSaveError('')
     setOcrPct(0)
   }, [])
 
@@ -70,6 +72,7 @@ export default function Scan() {
     setExtracted(null)
     setOcrMsg('')
     setOcrPct(0)
+    setSaveError('')
     setPhase('done')
   }, [])
 

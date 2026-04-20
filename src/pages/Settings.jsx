@@ -23,10 +23,10 @@ export default function Settings() {
 
   // Sostituisci tutto: rimpiazza scontrini e impostazioni
   const handleReplace = useCallback((incomingReceipts, incomingSettings) => {
-    replaceAll(incomingReceipts)
     if (incomingSettings && typeof incomingSettings === 'object') {
       replaceSettings(incomingSettings)
     }
+    replaceAll(incomingReceipts)
   }, [replaceAll, replaceSettings])
 
   return (

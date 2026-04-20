@@ -1,12 +1,14 @@
 import { TrendingDown, TrendingUp, Minus } from 'lucide-react'
 import { formatEur, monthLabel, monthPrefix } from '../../lib/format.js'
 
-// Soglia minima (€) per considerare una variazione mensile significativa
+// Soglia minima in euro per considerare una variazione mensile non nulla.
+// Il valore (€ 0.005) è volutamente trascurabile: qualsiasi differenza
+// superiore a mezzo centesimo attiva l'indicatore di trend.
 const TREND_THRESHOLD = 0.005
 
 /**
  * Riepilogo mensile con totale corrente e indicatore di trend rispetto al mese precedente.
- * Il trend è mostrato solo se la differenza assoluta supera {@link TREND_THRESHOLD} (0.5%).
+ * Il trend è mostrato solo se la differenza assoluta in euro supera {@link TREND_THRESHOLD} (€ 0.005).
  * Trend positivo (spesa aumentata) → rosso; trend negativo → verde; invariato → grigio.
  *
  * @param {Object} props

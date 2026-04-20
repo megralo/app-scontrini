@@ -22,6 +22,7 @@ export default function FileUploader({ onFile }) {
   function handleFiles(files) {
     const file = files?.[0]
     if (!file) return
+    if (inputRef.current) inputRef.current.value = ''
     if (!ACCEPTED.includes(file.type)) {
       setError('Formato non supportato. Usa JPG, PNG o WEBP.')
       return
